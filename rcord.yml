@@ -33,6 +33,7 @@ use_maas: True
 
 # XOS config
 xos_tosca_config_templates:
+  - vsg-router-net.yaml
   - vtn-service.yaml
   - fabric-service.yaml
   - management-net.yaml
@@ -41,8 +42,8 @@ xos_tosca_config_templates:
   - service-graph-constraints.yaml
   - xos-gui-extensions.yml
 
-xos_new_tosca_config_templates:
-  - vsg-router-net.yaml
+#xos_new_tosca_config_templates:
+#  - vsg-router-net.yaml
 
 # GUI Config [new GUI]
 gui_project_name: "E-CORD"
