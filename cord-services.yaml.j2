@@ -306,21 +306,22 @@ topology_template:
               relationship: tosca.relationships.BelongsToOne
 {% endif %}
 
-    #flat_router_network:
-    #    type: tosca.nodes.Network
-    #    properties:
-    #      must-exist: true
-    #      name: flat_router_network
+    flat_router_network:
+        type: tosca.nodes.Network
+        properties:
+          must-exist: true
+          name: flat_router_network
 
     #vsg_slice_flat_router_network:
-    #    type: tosca.nodes.NetworkSlice
-    #    requirements:
-    #      - network:
-    #          node: flat_router_network
-    #          relationship: tosca.relationships.BelongsToOne
-    #      - slice:
-    #          node:{{ site_name }}_vsg
-    #          relationship: tosca.relationships.BelongsToOne 
+    networkslice#flat_router_network_{{ site_name }}_vsg:
+        type: tosca.nodes.NetworkSlice
+        requirements:
+          - network:
+              node: flat_router_network
+              relationship: tosca.relationships.BelongsToOne
+          - slice:
+              node: {{ site_name }}_vsg
+              relationship: tosca.relationships.BelongsToOne 
 
     
     # TODO: migrate interfaces when we'll start using them
