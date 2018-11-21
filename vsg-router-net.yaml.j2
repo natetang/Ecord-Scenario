@@ -1,0 +1,57 @@
+tosca_definitions_version: tosca_simple_yaml_1_0
+
+
+
+imports:
+   - custom_types/xos.yaml
+   - custom_types/site.yaml
+   - custom_types/slice.yaml
+   - custom_types/flavor.yaml
+   - custom_types/network.yaml
+   - custom_types/networktemplate.yaml
+
+description: flat network for router interface
+
+topology_template:
+  node_templates:
+
+# site, fully created in deployment.yaml
+    {{ site_name }}:
+      type: tosca.nodes.Site
+      properties:
+          name: {{ site_name }}
+
+# flat network for router
+    flat_router_template:
+      type: tosca.nodes.NetworkTemplate
+      properties:
+          name: flat_router_template
+          visibility: private
+          translation: none
+          vtn_kind: FLAT
+    flat_router_network:
+      type: tosca.nodes.Network
+      properties:
+          name: flat_router_network
+          subnet: 140.113.131.128/26
+          permit_all_slices: true
+      requirements:
+          - template:
+              node: flat_router_template
+              relationship: tosca.relationships.BelongsToOne
+          - owner:
+              node: {{ site_name}}_flat_router
+              relationship: tosca.relationships.BelongsToOne
+
+    {{ site_name }}_flat_router:
+      description: This slice exists soley to own the Flat network
+      type: tosca.nodes.Slice
+      properties:
+          name: {{ site_name }}_flat_router
+          default_isolation: vm
+          network: noauto
+      requirements:
+          - site:
+              node: {{ site_name }}
+              relationship: tosca.relationships.BelongsToOne      
+              
