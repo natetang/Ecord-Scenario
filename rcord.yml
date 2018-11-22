@@ -33,7 +33,8 @@ use_maas: True
 
 # XOS config
 xos_tosca_config_templates:
-  - vsg-router-net.yaml
+  #- vsg-net.yaml
+  #- vsg-router-net.yaml
   - vtn-service.yaml
   - fabric-service.yaml
   - management-net.yaml

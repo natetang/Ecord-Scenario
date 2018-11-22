@@ -306,22 +306,59 @@ topology_template:
               relationship: tosca.relationships.BelongsToOne
 {% endif %}
 
-    flat_router_network:
-        type: tosca.nodes.Network
-        properties:
-          must-exist: true
-          name: flat_router_network
+    #flat_router_network:
+    #    type: tosca.nodes.Network
+    #    properties:
+    #      must-exist: true
+    #      name: flat_router_network
 
+    #networkslice#flat_router_{{ site_name }}_vsg:
+    #    type: tosca.nodes.NetworkSlice
+    #    requirements:
+    #      - network:
+    #          node: flat_router_network
+    #          relationship: tosca.relationships.BelongsToOne
+    #      - slice:
+    #          node: {{ site_name }}_vsg
+    #          relationship: tosca.relationships.BelongsToOne
+
+    #flat_router_template:
+    #  type: tosca.nodes.NetworkTemplate
+    #  properties:
+    #    name: flat_router_template
+    #    visibility: private
+    #    translation: none
+    #    vtn_kind: FLAT
+
+    #flat_router_network:
+    #    type: tosca.nodes.Network
+    #     properties:
+    #      name: flat_router_network
+    #      subnet: 140.113.131.128/26
+    #      permit_all_slices: true
+
+    #{{ site_name}}_vsg-flat:
+    # type: tosca.nodes.Network
+    # properties:
+    #   name: {{ site_name }}_vsg-flat
+    # requirements:
+    #   - template:
+    #       node: flat_router_template
+    #       relationship: tosca.relationships.BelongsToOne
+    #   - owner:
+    #       node: {{ site_name }}_vsg
+    #       relationship: tosca.relationships.BelongsToOne
+   
     #vsg_slice_flat_router_network:
-    networkslice#flat_router_network_{{ site_name }}_vsg:
-        type: tosca.nodes.NetworkSlice
-        requirements:
-          - network:
-              node: flat_router_network
-              relationship: tosca.relationships.BelongsToOne
-          - slice:
-              node: {{ site_name }}_vsg
-              relationship: tosca.relationships.BelongsToOne 
+    #networkslice#{{ site_name }}_vsg-flat_router_networ:
+    #    type: tosca.nodes.NetworkSlice
+    #    requirements:
+    #      - network:
+    #          node: {{ site_name }}_vsg-flat
+    #          relationship: tosca.relationships.BelongsToOne
+    #      - slice:
+    #          node: {{ site_name }}_vsg
+    #          relationship: tosca.relationships.BelongsToOne 
 
     
     # TODO: migrate interfaces when we'll start using them
