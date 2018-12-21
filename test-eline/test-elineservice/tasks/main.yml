@@ -1,0 +1,38 @@
+---
+# exampleservice-config/tasks/main.yml
+
+
+- name: Create fake/empty ssh keys if profile hasn't created them
+  copy:
+    remote_src: True # file is local to the remote machine
+    force: False # only copy if destination file doesn't exist
+    src: "/dev/null"
+    dest: "{{ head_cord_profile_dir }}/key_import/{{ item }}"
+    mode: 0600
+  with_items:
+    - elineservice_rsa
+    - elineservice_rsa.pub
+
+
+
+- name: TOSCA to create exampleservice test config
+  template:
+    src: "test-elineservice.yaml.j2"
+    dest: "{{ head_cord_profile_dir }}/test-elineservice.yaml"
+
+- name: Configure XOS with profile specific TOSCA (new Engine)
+  uri:
+    url: "{{ xos_tosca_url }}/run"
+    method: POST
+    headers:
+      xos-username: "{{ xos_admin_user }}"
+      xos-password: "{{ head_xos_admin_pass }}"
+    body: "{{ lookup('file', head_cord_profile_dir + '/test-elineservice.yaml' ) }}"
+    status_code: 200
+  register: result
+  until: result | success
+  retries: 50
+  delay: 5
+  tags:
+    - skip_ansible_lint # TOSCA loading should be idempotent
+
