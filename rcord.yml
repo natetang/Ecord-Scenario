@@ -87,6 +87,9 @@ xos_services:
     keypair: vsg_rsa
   - name: fabric
     path: orchestration/xos_services/fabric
+  - name: elineservice
+    path: orchestration/xos_services/elineservice
+    keypair: elineservice_rsa
 
 xos_dynamic_services:
   - name: exampleservice
